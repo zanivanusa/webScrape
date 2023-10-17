@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estates</title>
+</head>
+<body>
+    {% for estate in estates %}
+        <h2>{{ estate[2] }}</h2>
+        <p>Location: {{ estate[1] }}</p>
+        {% if estate[3] == '0' %}
+        <p>Information about the price at RK</p>
+        {% else %}
+        <p>Price: {{ estate[3] }}Kč</p>
+        {% endif %}
+                <img src={{ estate[4] }} alt="Estate Image">
+        <hr>
+    {% endfor %}
+</body>
+</html>

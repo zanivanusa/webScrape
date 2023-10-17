@@ -1,0 +1,17 @@
+# Use an official Python runtime as the base image
+FROM python:3.9
+
+
+# Set the working directory in the container
+WORKDIR /scraper
+
+# Copy over and install the dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+# Copy the Scrapy project files into the container
+COPY . .
+
+# Command to run the Scrapy spider when the container starts
+CMD ["scrapy", "crawl", "listSpider"]

@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: webScrapeListing
+    ports:
+    #inside the container
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init/:/docker-entrypoint-initListing.d  # <-- creating the listings table
+
+
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:pass@db:5432/webScrapeListing
+
+
+  scraper:
+    build: 
+      context: ./scraper
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
